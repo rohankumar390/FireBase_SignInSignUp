@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> 
+</head>
+<body>
+    <div>HEllo</div>
+</body>
+</html>
+function SignIn() {
+    var email = document.getElementById('eemail').value;
+    var password = document.getElementById('lpassword').value;
+
+    // Check if the email and password exist in the database
+    datab.orderByChild("email").equalTo(email).once("value", function(snapshot) {
+        if (snapshot.exists()) {
+            // Email exists in the database
+            // Check if the password matches
+            snapshot.forEach(function(data) {
+                var userData = data.val();
+                if (userData.password === password) {
+                    // Password matches, sign in the user
+                    const promise = auth.signInWithEmailAndPassword(email, password);
+                    promise.catch(e => alert(e.message));
+                    window.open('abc.html', '_self'); // Redirect to another page
+                } else {
+                    alert("Incorrect password");
+                }
+            });
+        } else {
+            alert("Email not found in the database");
+        }
+    });
+}
